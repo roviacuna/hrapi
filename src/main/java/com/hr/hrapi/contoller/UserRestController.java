@@ -28,8 +28,14 @@ public class UserRestController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<UserResponseRest> crearUser(@RequestBody User user){
+    public ResponseEntity<UserResponseRest> createUser(@RequestBody User user){
         ResponseEntity<UserResponseRest> userResponseRestResponseEntity = userService.createUser(user);
+        return userResponseRestResponseEntity;
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<UserResponseRest> updateUser(@RequestBody User user, @PathVariable Long id){
+        ResponseEntity<UserResponseRest> userResponseRestResponseEntity = userService.updateUser(user, id);
         return userResponseRestResponseEntity;
     }
 

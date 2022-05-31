@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -96,6 +97,48 @@ public class UserServiceImpl implements IUserService {
         }
 
         userResponseRest.setMetadata("Respuesta OK", "00", "Usuario creado exitosamente");
+        return new ResponseEntity<UserResponseRest>(userResponseRest, HttpStatus.OK);
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<UserResponseRest> updateUser(User user, Long id) {
+        log.info("Iniciando el método actualizar usuario");
+        UserResponseRest userResponseRest = new UserResponseRest();
+        List<User> users = new ArrayList<>();
+
+        try {
+            Optional<User> userById = iUserDao.findById(id);
+            if(userById.isPresent()){
+                userById.get().setName(user.getName());
+                userById.get().setLastname(user.getLastname());
+                userById.get().setPhone(user.getPhone());
+                userById.get().setEmail(user.getEmail());
+
+                User userToUpdate = iUserDao.save(userById.get());
+
+                if (userToUpdate != null){
+                    userResponseRest.setMetadata("Respuesta OK", "00", "Usuario actualizado exitosamente");
+                    users.add(userToUpdate);
+                    userResponseRest.getUserResponse().setUser(users);
+                }else {
+                    log.error("Error al actualizar usuario");
+                    userResponseRest.setMetadata("Respuesta NO-OK", "-1", "Usuario no creado");
+                    return new ResponseEntity<UserResponseRest>(userResponseRest, HttpStatus.BAD_REQUEST);
+                }
+
+            }
+            else {
+                log.error("Error al actulizar Usuario");
+                userResponseRest.setMetadata("Respuesta NO-OK", "-1", "Usuario no actualizado");
+                return new ResponseEntity<UserResponseRest>(userResponseRest, HttpStatus.NOT_FOUND);
+            }
+        }catch (Exception e){
+            log.error("Error al actualizar Usuario", e.getMessage());
+            e.getStackTrace();
+            userResponseRest.setMetadata("Respuesta NO-OK", "-1", "Error al actualizar usuario");
+            return new ResponseEntity<UserResponseRest>(userResponseRest, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         return new ResponseEntity<UserResponseRest>(userResponseRest, HttpStatus.OK);
     }
 
