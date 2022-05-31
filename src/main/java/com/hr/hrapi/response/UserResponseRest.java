@@ -1,6 +1,6 @@
 package com.hr.hrapi.response;
 
-public class UserReponseRest extends ResponseRest{
+public class UserResponseRest extends ResponseRest{
 
     private UserResponse userResponse = new UserResponse();
 

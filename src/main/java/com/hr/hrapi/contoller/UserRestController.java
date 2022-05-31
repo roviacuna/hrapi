@@ -1,14 +1,12 @@
 package com.hr.hrapi.contoller;
 
-import com.hr.hrapi.response.UserReponseRest;
+import com.hr.hrapi.model.User;
+import com.hr.hrapi.response.UserResponseRest;
 import com.hr.hrapi.response.UserResponse;
 import com.hr.hrapi.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -18,15 +16,21 @@ public class UserRestController {
     public IUserService userService;
 
     @GetMapping("/users")
-    public ResponseEntity<UserReponseRest> userGetAll(){
-        ResponseEntity<UserReponseRest> userReponseRest = userService.findUsers();
-        return userReponseRest;
+    public ResponseEntity<UserResponseRest> userGetAll(){
+        ResponseEntity<UserResponseRest> userResponseRest = userService.findUsers();
+        return userResponseRest;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserReponseRest> userGetById(@PathVariable Long id){
-        ResponseEntity<UserReponseRest> userResponseRest = userService.findUserById(id);
+    public ResponseEntity<UserResponseRest> userGetById(@PathVariable Long id){
+        ResponseEntity<UserResponseRest> userResponseRest = userService.findUserById(id);
         return userResponseRest;
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<UserResponseRest> crearUser(@RequestBody User user){
+        ResponseEntity<UserResponseRest> userResponseRestResponseEntity = userService.createUser(user);
+        return userResponseRestResponseEntity;
     }
 
 }

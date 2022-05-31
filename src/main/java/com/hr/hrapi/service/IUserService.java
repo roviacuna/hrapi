@@ -1,11 +1,13 @@
 package com.hr.hrapi.service;
 
-import com.hr.hrapi.response.UserReponseRest;
+import com.hr.hrapi.model.User;
+import com.hr.hrapi.response.UserResponseRest;
 import org.springframework.http.ResponseEntity;
 
 public interface IUserService {
 
-    public ResponseEntity<UserReponseRest> findUsers();
-    public ResponseEntity<UserReponseRest> findUserById(long id);
+    public ResponseEntity<UserResponseRest> findUsers();
+    public ResponseEntity<UserResponseRest> findUserById(long id);
+    public ResponseEntity<UserResponseRest> createUser(User user);
 
 }
