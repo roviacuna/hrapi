@@ -3,9 +3,12 @@ package com.hr.hrapi.service;
 import com.hr.hrapi.model.User;
 import com.hr.hrapi.model.dao.IUserDao;
 import com.hr.hrapi.response.UserReponseRest;
+import com.hr.hrapi.response.UserResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +24,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     @Transactional(readOnly = true)
-    public UserReponseRest findUsers() {
+    public ResponseEntity<UserReponseRest> findUsers() {
         log.info("inicio de método buscar");
         UserReponseRest userReponseRest = new UserReponseRest();
 
@@ -30,10 +33,11 @@ public class UserServiceImpl implements IUserService {
             userReponseRest.getUserResponse().setUser(user);
             userReponseRest.setMetadata("Respuesta OK", "00", "Respuesta exitosa");
         }catch (Exception e){
-            userReponseRest.setMetadata("Respuesta NO-OK", "-1", "Respuesta NO exitosa");
+            userReponseRest.setMetadata("Respuesta NO-OK", "-1", "Error al consultar los usuarios");
             log.error("Error al consultar usuarios", e.getMessage());
             e.getStackTrace();
+            return new ResponseEntity<UserReponseRest>(userReponseRest, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return userReponseRest;
+        return new ResponseEntity<UserReponseRest>(userReponseRest, HttpStatus.OK);
     }
 }

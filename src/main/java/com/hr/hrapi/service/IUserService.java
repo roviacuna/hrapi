@@ -1,9 +1,10 @@
 package com.hr.hrapi.service;
 
 import com.hr.hrapi.response.UserReponseRest;
+import org.springframework.http.ResponseEntity;
 
 public interface IUserService {
 
-    public UserReponseRest findUsers();
+    public ResponseEntity<UserReponseRest> findUsers();
 
 }
