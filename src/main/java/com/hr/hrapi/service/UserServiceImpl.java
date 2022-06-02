@@ -142,5 +142,24 @@ public class UserServiceImpl implements IUserService {
         return new ResponseEntity<UserResponseRest>(userResponseRest, HttpStatus.OK);
     }
 
+    @Override
+    @Transactional
+    public ResponseEntity<UserResponseRest> deleteUser(Long id) {
+        log.info("Iniciando el método eliminar usuario");
+        UserResponseRest userResponseRest = new UserResponseRest();
+
+        try{
+            iUserDao.deleteById(id);
+            userResponseRest.setMetadata("Respuesta OK", "00", "Usuario eliminado exitosamente");
+
+        }catch (Exception e){
+            log.error("Error al eliminar usuario", e.getMessage());
+            e.getStackTrace();
+            userResponseRest.setMetadata("Respuesta NO-OK", "-1", "Error al eliminar usuario");
+            return new ResponseEntity<UserResponseRest>(userResponseRest, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<UserResponseRest>(userResponseRest, HttpStatus.OK);
+    }
+
 
 }

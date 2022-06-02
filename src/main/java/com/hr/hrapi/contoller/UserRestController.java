@@ -39,4 +39,10 @@ public class UserRestController {
         return userResponseRestResponseEntity;
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<UserResponseRest> deleteUser(@PathVariable Long id){
+        ResponseEntity<UserResponseRest> userResponseRestResponseEntity = userService.deleteUser(id);
+        return userResponseRestResponseEntity;
+    }
+
 }

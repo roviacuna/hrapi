@@ -10,5 +10,6 @@ public interface IUserService {
     public ResponseEntity<UserResponseRest> findUserById(long id);
     public ResponseEntity<UserResponseRest> createUser(User user);
     public ResponseEntity<UserResponseRest> updateUser(User user, Long id);
+    public ResponseEntity<UserResponseRest> deleteUser(Long id);
 
 }
