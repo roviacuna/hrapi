@@ -2,7 +2,6 @@ package com.hr.hrapi.contoller;
 
 import com.hr.hrapi.model.User;
 import com.hr.hrapi.response.UserResponseRest;
-import com.hr.hrapi.response.UserResponse;
 import com.hr.hrapi.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
