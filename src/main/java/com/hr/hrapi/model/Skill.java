@@ -11,7 +11,7 @@ public class Skill implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String descripción;
+    private String description;
 
     public Long getId() {
         return id;
@@ -29,11 +29,11 @@ public class Skill implements Serializable {
         this.name = name;
     }
 
-    public String getDescripción() {
-        return descripción;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescripción(String descripción) {
-        this.descripción = descripción;
+    public void setDescription(String descripción) {
+        this.description = descripción;
     }
 }
