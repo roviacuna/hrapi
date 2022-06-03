@@ -1,10 +1,8 @@
 package com.hr.hrapi.service;
 
 import com.hr.hrapi.model.Skill;
-import com.hr.hrapi.model.User;
 import com.hr.hrapi.model.dao.ISkillDao;
 import com.hr.hrapi.response.SkillResponseRest;
-import com.hr.hrapi.response.UserResponseRest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
