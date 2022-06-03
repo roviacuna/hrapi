@@ -74,10 +74,33 @@ public class UserSkillServiceImpl implements IUserSkillService{
         return new ResponseEntity<UserSkillResponseRest>(userSkillResponseRest, HttpStatus.OK);
     }
 
-
     @Override
-    public ResponseEntity<UserSkillResponseRest> createUserSkill() {
-        return null;
+    public ResponseEntity<UserSkillResponseRest> createUserSkill(UserSkill userSkill) {
+        log.info("Agregando usuario-skill");
+        UserSkillResponseRest userSkillResponseRest = new UserSkillResponseRest();
+        List<UserSkill> userSkills = new ArrayList<>();
+
+        try {
+            UserSkill userSkillAdded = iUserSkillDao.save(userSkill);
+
+            if(userSkillAdded != null){
+                userSkills.add(userSkillAdded);
+                userSkillResponseRest.getUserSkillResponse().setUserSkill(userSkills);
+            }
+            else {
+                log.error("Error al crear usuario-skill");
+                userSkillResponseRest.setMetadata("Respuesta NO-OK", "-1", "Usuario-skill no creado");
+                return new ResponseEntity<UserSkillResponseRest>(userSkillResponseRest, HttpStatus.BAD_REQUEST);
+            }
+
+        }catch (Exception e){
+            log.error("Error al crear el usuario-skill");
+            userSkillResponseRest.setMetadata("Respuesta NO-OK", "-1", "Error al crear usuario-skill");
+            return new ResponseEntity<UserSkillResponseRest>(userSkillResponseRest, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        userSkillResponseRest.setMetadata("Respuesta OK", "00", "Usuario-skill creado exitosamente");
+        return new ResponseEntity<UserSkillResponseRest>(userSkillResponseRest, HttpStatus.OK);
     }
 
     @Override
