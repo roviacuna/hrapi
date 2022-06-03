@@ -2,13 +2,13 @@ package com.hr.hrapi.response;
 
 public class UserSkillResponseRest extends ResponseRest {
 
-    private UserResponse userResponse = new UserResponse();
+    private UserSkillResponse userSkillResponse = new UserSkillResponse();
 
-    public UserResponse getUserResponse() {
-        return userResponse;
+    public UserSkillResponse getUserSkillResponse() {
+        return userSkillResponse;
     }
 
-    public void setUserResponse(UserResponse userResponse) {
-        this.userResponse = userResponse;
+    public void setUserSkillResponse(UserSkillResponse userSkillResponse) {
+        this.userSkillResponse = userSkillResponse;
     }
 }
