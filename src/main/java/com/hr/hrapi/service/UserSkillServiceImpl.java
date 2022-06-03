@@ -17,7 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserSkillServiceImpl implements IUserSkillService{
@@ -47,9 +49,31 @@ public class UserSkillServiceImpl implements IUserSkillService{
     }
 
     @Override
-    public ResponseEntity<UserSkillResponseRest> findUserSkillById() {
-        return null;
+    public ResponseEntity<UserSkillResponseRest> findUserSkillById(Long id) {
+        log.info("Buscando usuario-skill por ID");
+        UserSkillResponseRest userSkillResponseRest = new UserSkillResponseRest();
+        List<UserSkill> userSkills = new ArrayList<>();
+
+        try {
+            Optional<UserSkill> userSkill = iUserSkillDao.findById(id);
+            if(userSkill.isPresent()){
+                userSkills.add(userSkill.get());
+                userSkillResponseRest.getUserSkillResponse().setUserSkill(userSkills);
+            }
+            else {
+                log.error("Error al consultar usuario-skill");
+                userSkillResponseRest.setMetadata("Respuesta NO-OK", "-1", "Usuario-Skill no encontrado");
+                return new ResponseEntity<UserSkillResponseRest>(userSkillResponseRest, HttpStatus.NOT_FOUND);
+            }
+        }catch (Exception e){
+            log.error("Error al consultar usuario-skill");
+            userSkillResponseRest.setMetadata("Respuesta NO-OK", "-1", "Error al consultar usuario-skill");
+            return new ResponseEntity<UserSkillResponseRest>(userSkillResponseRest, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        userSkillResponseRest.setMetadata("Respuesta OK", "00", "Respuesta exitosa");
+        return new ResponseEntity<UserSkillResponseRest>(userSkillResponseRest, HttpStatus.OK);
     }
+
 
     @Override
     public ResponseEntity<UserSkillResponseRest> createUserSkill() {
