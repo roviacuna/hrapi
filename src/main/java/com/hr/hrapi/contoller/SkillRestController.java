@@ -1,9 +1,7 @@
 package com.hr.hrapi.contoller;
 
 import com.hr.hrapi.model.Skill;
-import com.hr.hrapi.model.User;
 import com.hr.hrapi.response.SkillResponseRest;
-import com.hr.hrapi.response.UserResponseRest;
 import com.hr.hrapi.service.ISkillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

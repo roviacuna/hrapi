@@ -23,14 +23,26 @@ public class UserSkillController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserSkillResponseRest> skillGetById(@PathVariable Long id){
+    public ResponseEntity<UserSkillResponseRest> uSerSkillGetById(@PathVariable Long id){
         ResponseEntity<UserSkillResponseRest> userSkillResponseRestResponseEntity = iUserSkillService.findUserSkillById(id);
         return userSkillResponseRestResponseEntity;
     }
 
     @PostMapping("/add")
-    public ResponseEntity<UserSkillResponseRest> createSkill(@RequestBody UserSkill userSkill){
+    public ResponseEntity<UserSkillResponseRest> createUserSkill(@RequestBody UserSkill userSkill){
         ResponseEntity<UserSkillResponseRest> userSkillResponseRestResponseEntity = iUserSkillService.createUserSkill(userSkill);
+        return userSkillResponseRestResponseEntity;
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<UserSkillResponseRest> updateUserSkill(@RequestBody UserSkill userSkill, @PathVariable Long id){
+        ResponseEntity<UserSkillResponseRest> userSkillResponseRestResponseEntity = iUserSkillService.updateUserSkill(userSkill, id);
+        return userSkillResponseRestResponseEntity;
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<UserSkillResponseRest> deleteUserSkill(@PathVariable Long id){
+        ResponseEntity<UserSkillResponseRest> userSkillResponseRestResponseEntity = iUserSkillService.deleteUserSkill(id);
         return userSkillResponseRestResponseEntity;
     }
 

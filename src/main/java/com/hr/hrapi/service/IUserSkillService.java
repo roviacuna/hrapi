@@ -9,8 +9,8 @@ public interface IUserSkillService {
     public ResponseEntity<UserSkillResponseRest> findUserSkill();
     public ResponseEntity<UserSkillResponseRest> findUserSkillById(Long id);
     public ResponseEntity<UserSkillResponseRest> createUserSkill(UserSkill userSkill);
-    public ResponseEntity<UserSkillResponseRest> updateUserSkill();
-    public ResponseEntity<UserSkillResponseRest> deleteUserSkill();
+    public ResponseEntity<UserSkillResponseRest> updateUserSkill(UserSkill userSkill, Long id);
+    public ResponseEntity<UserSkillResponseRest> deleteUserSkill(Long id);
 
 
 }

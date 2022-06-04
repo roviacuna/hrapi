@@ -104,12 +104,73 @@ public class UserSkillServiceImpl implements IUserSkillService{
     }
 
     @Override
-    public ResponseEntity<UserSkillResponseRest> updateUserSkill() {
-        return null;
+    public ResponseEntity<UserSkillResponseRest> updateUserSkill(UserSkill userSkill, Long id) {
+        log.info("Iniciando el método actualizar User-Skill");
+        UserSkillResponseRest userSkillResponseRest = new UserSkillResponseRest();
+        List<UserSkill> userSkills = new ArrayList<>();
+
+        try {
+            Optional<UserSkill> userSkillDaoById = iUserSkillDao.findById(id);
+            if(userSkillDaoById.isPresent()){
+                userSkillDaoById.get().setSkill(userSkill.getSkill());
+                userSkillDaoById.get().setUser(userSkill.getUser());
+                userSkillDaoById.get().setYearExperience(userSkill.getYearExperience());
+
+                UserSkill userSkillToUpdate = iUserSkillDao.save(userSkillDaoById.get());
+
+                if (userSkillToUpdate != null){
+                    userSkillResponseRest.setMetadata("Respuesta OK", "00", "Usuario-Skill actualizado exitosamente");
+                    userSkills.add(userSkillToUpdate);
+                    userSkillResponseRest.getUserSkillResponse().setUserSkill(userSkills);
+                }else {
+                    log.error("Error al actualizar usuario-skill");
+                    userSkillResponseRest.setMetadata("Respuesta NO-OK", "-1", "Usuario-Skill no creado");
+                    return new ResponseEntity<UserSkillResponseRest>(userSkillResponseRest, HttpStatus.BAD_REQUEST);
+                }
+
+            }
+            else {
+                log.error("Error al actulizar Usuario-Skill");
+                userSkillResponseRest.setMetadata("Respuesta NO-OK", "-1", "Usuari-Skill no actualizado");
+                return new ResponseEntity<UserSkillResponseRest>(userSkillResponseRest, HttpStatus.NOT_FOUND);
+            }
+        }catch (Exception e){
+            log.error("Error al actualizar Usuario-Skill", e.getMessage());
+            e.getStackTrace();
+            userSkillResponseRest.setMetadata("Respuesta NO-OK", "-1", "Error al actualizar usuario-skill");
+            return new ResponseEntity<UserSkillResponseRest>(userSkillResponseRest, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<UserSkillResponseRest>(userSkillResponseRest, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<UserSkillResponseRest> deleteUserSkill() {
-        return null;
+    public ResponseEntity<UserSkillResponseRest> deleteUserSkill(Long id) {
+        log.info("Iniciando el método eliminar User-Skill");
+        UserSkillResponseRest userSkillResponseRest = new UserSkillResponseRest();
+        List<UserSkill> userSkills = new ArrayList<>();
+
+        try{
+            Optional<UserSkill> userSkill = iUserSkillDao.findById(id);
+            if(userSkill.isPresent()){
+                userSkills.add(userSkill.get());
+                userSkillResponseRest.getUserSkillResponse().setUserSkill(userSkills);
+                iUserSkillDao.deleteById(id);
+                userSkillResponseRest.setMetadata("Respuesta OK", "00", "User-Skill eliminado exitosamente");
+            }
+            else {
+                log.error("Error al consultar User-Skill");
+                userSkillResponseRest.setMetadata("Respuesta NO-OK", "-1", "User-Skill no encontrado");
+                return new ResponseEntity<UserSkillResponseRest>(userSkillResponseRest, HttpStatus.NOT_FOUND);
+            }
+
+
+        }catch (Exception e){
+            log.error("Error al eliminar User-Skill", e.getMessage());
+            e.getStackTrace();
+            userSkillResponseRest.setMetadata("Respuesta NO-OK", "-1", "Error al eliminar user-Skill");
+            return new ResponseEntity<UserSkillResponseRest>(userSkillResponseRest, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<UserSkillResponseRest>(userSkillResponseRest, HttpStatus.OK);
     }
-}
+    }
+
