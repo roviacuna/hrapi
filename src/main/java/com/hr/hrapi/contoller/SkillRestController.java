@@ -33,7 +33,7 @@ public class SkillRestController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<SkillResponseRest> updateUser(@RequestBody Skill skill, @PathVariable Long id){
+    public ResponseEntity<SkillResponseRest> updateEmployee(@RequestBody Skill skill, @PathVariable Long id){
         ResponseEntity<SkillResponseRest> skillResponseRestResponseEntity = iSkillService.updateSkill(skill, id);
         return skillResponseRestResponseEntity;
     }

@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @Service
 public class SkillServiceImpl implements ISkillService{
-    private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(EmployeeServiceImpl.class);
 
     @Autowired
     private ISkillDao iSkillDao;

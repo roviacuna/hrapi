@@ -6,8 +6,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name="user_skill")
-public class UserSkill implements Serializable {
+@Table(name="employee_skill")
+public class EmployeeSkill implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,7 +15,7 @@ public class UserSkill implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private User user;
+    private Employee employee;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -31,12 +31,12 @@ public class UserSkill implements Serializable {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     public Skill getSkill() {
